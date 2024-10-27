@@ -82,6 +82,28 @@ local data_generators = {
         table.insert(res, 0)
         return res, 1
     end,
+    ["fill"] = function(data)
+        local len = data[2].value
+        local byte_arg = data[3]
+        local byte = 0
+        if len.valtype ~= "number" then
+            return nil, nil, "'" .. len.value .. "': Invalid type for argument to .fill: " .. len.valtype
+        elseif byte_arg and byte_arg.value.valtype ~= "number" then
+            return nil, nil, "'" .. byte_arg.value.value .. "': Invalid type for argument to .fill: " .. byte_arg.value.valtype
+        elseif len.value > arch.word_max or byte_arg.value.value > arch.byte_max then
+            return nil, nil, "Out of range argument to .fill"
+        end
+        if byte_arg then
+            byte = byte_arg.value.value
+        end
+
+        local res = {}
+        for i=1, len.value do
+            table.insert(res, byte)
+        end
+
+        return res, 1
+    end
 }
 
 ---@class irinst
