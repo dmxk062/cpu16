@@ -49,8 +49,8 @@ byte* read_memfile(char* path, size_t size, size_t n) {
 
 static inline word stack_get_word(byte* stack, word* index) {
     word upper = stack[*index];
-    word lower = stack[*index+1];
-    *index+=2;
+    word lower = stack[*index + 1];
+    *index += 2;
     return (upper << 8) + lower;
 }
 
@@ -151,23 +151,26 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                     word val = *reg16bit[R1(op)];
                     word lower = val & 0x00FF; 
                     word higher = (val & 0xFF00) >> 8; 
-                    data[++rsp] = higher;
-                    data[++rsp] = lower;
+                    data[rsp] = higher;
+                    data[rsp + 1] = lower;
+                    rsp += 2;
                 } else {
                     byte val = *reg8bit[R1(op)];
-                    data[++rsp] = val;
+                    data[rsp++] = val;
                 }
                 break;
             }
             case PULL: {
                 if (IS16(op)) {
-                    word lower = data[rsp--];
-                    word higher = data[rsp--];
-                    word word = (higher << 8) + lower;
+                    word lower = data[rsp - 1];
+                    word higher = data[rsp - 2];
+                    word word = (higher << 8) | lower;
+                    rsp -= 2;
                     *reg16bit[R1(op)] = word;
                 } else {
                     *reg8bit[R1(op)] = data[rsp--];
                 }
+                break;
             }
             case SET: {
                 if (IS16(op)) {
@@ -378,14 +381,16 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                 word lower = cur_ptr & 0x00FF; 
                 word higher = (cur_ptr & 0xFF00) >> 8; 
 
-                data[rsp++] = higher;
-                data[rsp++] = lower;
+                data[rsp] = higher;
+                data[rsp + 1] = lower;
+                rsp += 2;
                 JMP(target_addr);
             }
             case RETF: {
-                word lower = data[--rsp];
-                word higher = data[--rsp];
-                word address = (higher << 8) + lower;
+                word lower = data[rsp - 1];
+                word higher = data[rsp - 2];
+                rsp -= 2;
+                word address = (higher << 8) | lower;
                 JMP(address);
             }
             case CFL: {
