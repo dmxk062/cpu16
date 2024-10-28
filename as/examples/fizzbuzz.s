@@ -47,7 +47,7 @@ skip2:
     pull    %r3
     wr      '\n'
 
-    add     %r1,        1
+    inc     %r1
     cmp     %r3,        %r1
     jnn     fizzbuzz_loop
     jmp     fizzbuzz_done
@@ -67,14 +67,14 @@ numtostr_loop:
     div     %r0,        %r1
     add     %r1,        '0'
     sd      %r1l,       %r3
-    sub     %r3,        1
+    dec     %r3
     cmp     %r0,        0
     jnz     numtostr_loop
 
 numtostr_done:
     ; return starting address of numeric string
     set     %r0,        %r3
-    add     %r0,        1
+    inc     %r0
 
     pull    %r1
     pull    %r3
@@ -89,7 +89,7 @@ puts_loop:
     cmp     %r3l,   0
     jiz     puts_done
     wr      %r3l
-    add     %r0,    1
+    inc     %r0
     jmp     puts_loop
 
 puts_done:
