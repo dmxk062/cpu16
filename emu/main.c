@@ -405,6 +405,10 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
             case CNF: { rfl.negative = 0; break; }
             case CCF: { rfl.carry = 0; break; }
             case COF: { rfl.overflow = 0; break; }
+            case SZF: { rfl.zero = 1; break; }
+            case SNF: { rfl.negative = 1; break; }
+            case SCF: { rfl.carry = 1; break; }
+            case SOF: { rfl.overflow = 1; break; }
             case WR: {
                 if (IS16(op)) {
                     word arg1 = GETA1_16(op);

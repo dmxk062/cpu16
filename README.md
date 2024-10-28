@@ -99,8 +99,38 @@ Size interpretation of r2 depends on instruction
 | cnf           | 0x42      | -                     | Clear negative flag
 | ccf           | 0x43      | -                     | Clear carry flag
 | cof           | 0x44      | -                     | Clear overflow flag
+| szf           | 0x45      | -                     | Set zero flag
+| snf           | 0x46      | -                     | Set negative flag
+| scf           | 0x47      | -                     | Set carry flag
+| sof           | 0x48      | -                     | Set overflow flag
 
 # Start sequence:
 
 The reset vector is located at 0x0000
 The interrupt vector is located at 0x00F0
+
+# Calling convention:
+
+The primary argument is parsed in `%r0` and `%r0` is always considered caller saved.
+Further register arguments (up to a maximum of 3 total 16-bit arguments) are passed in `%r1` and `%r2`.
+Other arguments are passed on the stack in reverse order (= the last argument is pushed first).
+Return order is the exact opposite: the primary 16 bit return value is returned in `%r0`,
+and the other two in `%r1` and `%r2`, additional return values are pushed onto the stack in order (= last value last).
+Any registers used as arguments to a function are considered caller saved,
+registers not used as arguments and `%r3` are callee saved.
+
+For 8 bit arguments the same order is true, lower registers are used before higher, `%r3l` and `r%3u` are not used.
+
+In order for pushing return values onto the stack to work, it is necessary to decrement the stack pointer.
+The same is true for a function taking arguments on the stack: it needs to first decrement the stack pointer to get back
+to before the return address: `sub %rsp, 2` and then pull the values. Before returning it needs to increment the stack
+pointer again: `add %rsp, 2`
+
+Instead of passing or returning further values on the stack, it is also permissible to use pointers returned or passed
+in `%r0`.
+
+
+## Error handling
+
+In case it is considered necessary for a function to perform error handling, the flags register can be used to communicate
+various states.

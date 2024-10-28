@@ -56,6 +56,10 @@ enum OP : byte {
     CNF = 0x42,
     CCF = 0x43,
     COF = 0x44,
+    SZF = 0x45,
+    SNF = 0x46,
+    SCF = 0x47,
+    SOF = 0x48,
     WR = 0x50,
 
 };

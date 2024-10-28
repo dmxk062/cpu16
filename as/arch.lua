@@ -64,6 +64,10 @@ M.instructions = {
     ["cnf"]  = { type = "none", code = 0x42 },
     ["ccf"]  = { type = "none", code = 0x43 },
     ["cof"]  = { type = "none", code = 0x44 },
+    ["szf"]  = { type = "none", code = 0x45 },
+    ["snf"]  = { type = "none", code = 0x46 },
+    ["scf"]  = { type = "none", code = 0x47 },
+    ["sof"]  = { type = "none", code = 0x48 },
 
     ["wr"]   = { type = "srow", code = 0x50 },
 }
