@@ -47,10 +47,9 @@ enum OP : byte {
     JNO = 0x28,
     CALL = 0x30,
     RETF = 0x31,
-    // INT = 0x32,
-    // RETI = 0x33,
-    // HALT = 0x34,
-    STOP = 0x35,
+    INT = 0x32,
+    HALT = 0x33,
+    STOP = 0x34,
     CFL = 0x40,
     CZF = 0x41,
     CNF = 0x42,
@@ -61,7 +60,7 @@ enum OP : byte {
     SCF = 0x47,
     SOF = 0x48,
     WR = 0x50,
-
+    RD = 0x51,
 };
 
 typedef union {

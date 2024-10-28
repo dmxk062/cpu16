@@ -6,7 +6,7 @@ PROGRAM_START = 0x1000
 .org 0x0000
 start:
     set     %rsp,       STACK_START
-    set     %r0,        10000
+    set     %r0,        0xFFFE
     call    fizzbuzz
 exit:
     stop
@@ -105,4 +105,4 @@ buzz:
 numbuf:
     .fill   8, 0
 numbuf_end:
-    .fill   1, 0
+    .byte   0

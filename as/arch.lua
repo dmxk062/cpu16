@@ -54,9 +54,8 @@ M.instructions = {
     ["call"] = { type = "srow", code = 0x30, r2full = true },
     ["retf"] = { type = "none", code = 0x31 },
     ["int"]  = { type = "srow", code = 0x32 },
-    ["reti"] = { type = "none", code = 0x33 },
-    ["halt"] = { type = "none", code = 0x34 },
-    ["stop"] = { type = "none", code = 0x35 },
+    ["halt"] = { type = "none", code = 0x33 },
+    ["stop"] = { type = "none", code = 0x34 },
 
     -- flags
     ["cfl"]  = { type = "none", code = 0x40 },
@@ -70,6 +69,7 @@ M.instructions = {
     ["sof"]  = { type = "none", code = 0x48 },
 
     ["wr"]   = { type = "srow", code = 0x50 },
+    ["rd"]   = { type = "sr", code = 0x51 },
 }
 
 M.registers = {

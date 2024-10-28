@@ -91,9 +91,8 @@ Size interpretation of r2 depends on instruction
 | call          | 0x30      | r1 / word             | Call function at a1
 | retf          | 0x31      | -                     | Return from function
 | int           | 0x32      | r1 / word             | Trigger interrupt a1
-| reti          | 0x33      | -                     | Return from interrupt
-| halt          | 0x34      | -                     | Halt CPU until next interrupt
-| stop          | 0x35      | -                     | Stop CPU fully
+| halt          | 0x33      | -                     | Halt CPU until next interrupt
+| stop          | 0x34      | -                     | Stop CPU fully
 | cfl           | 0x40      | -                     | Clear all arithmetic flags
 | czf           | 0x41      | -                     | Clear zero flag
 | cnf           | 0x42      | -                     | Clear negative flag

@@ -487,6 +487,18 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                 }
                 break;
             }
+            case RD: {
+                if (IS16(op)) {
+                    byte high = fgetc(stdin);
+                    byte low = fgetc(stdin);
+
+                    *reg16bit[R1(op)] = (high << 8) + low;
+                } else {
+                    byte read = fgetc(stdin);
+                    *reg8bit[R1(op)] = read;
+                }
+                break;
+            }
             // clang-format on
         }
     }
