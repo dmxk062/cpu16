@@ -76,8 +76,8 @@ Size interpretation of r2 depends on instruction
 | xor           | 0x17      | r1, r2 / r1, word     | bitwise xor of a1 and a2 -> a1
 | shl           | 0x18      | r1                    | shift r1 left
 | shr           | 0x19      | r1                    | shift r1 right
-| rol           | 0x1A      | r1, r2 / r1, word     | rotate a1 left by a2
-| ror           | 0x1B      | r1, r2 / r1, word     | rotate a1 right by a2
+| inc           | 0x1A      | r1                    | Increment r1
+| dec           | 0x1B      | r1                    | Decrement r1
 | cmp           | 0x1F      | r1, r2 / r1, word     | "compare" r1 and r2, like sub but doesn't store result, just sets flags
 | jmp           | 0x20      | r1 / word             | Jump to a1
 | jiz           | 0x21      | r1 / word             | Jump to a1 if zero is set

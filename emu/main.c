@@ -203,6 +203,24 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                 }
                 break;
             }
+            case INC: {
+                if (IS16(op)) {
+                    int res = (*reg16bit[R1(op)] + 1);
+
+                    rfl.carry = res > UINT16_MAX;
+                    rfl.zero = res == 0;
+
+                    *reg16bit[R1(op)] = (res & 0xFFFF);
+                } else {
+                    int res = (*reg8bit[R1(op)] + 1);
+
+                    rfl.carry = res > UINT8_MAX;
+                    rfl.zero = res == 0;
+
+                    *reg8bit[R1(op)] = (res & 0x00FF);
+                }
+                break;
+            }
             case SUB: {
                 if (IS16(op)) {
                     word arg2 = GETA2_16(op);
@@ -220,6 +238,24 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                     rfl.negative = res < 0;
                     rfl.zero = res == 0;
                     *reg8bit[R1(op)] = (res & 0xFF);
+                }
+                break;
+            }
+            case DEC: {
+                if (IS16(op)) {
+                    int res = (*reg16bit[R1(op)] - 1);
+
+                    rfl.negative = res < 0;
+                    rfl.zero = res == 0;
+
+                    *reg16bit[R1(op)] = (res & 0xFFFF);
+                } else {
+                    int res = (*reg8bit[R1(op)] - 1);
+
+                    rfl.negative = res < 0;
+                    rfl.zero = res == 0;
+
+                    *reg8bit[R1(op)] = (res & 0x00FF);
                 }
                 break;
             }
@@ -365,6 +401,38 @@ int emu_loop(byte code[SPACE], byte data[SPACE]) {
                     *reg8bit[R1(op)] = res;
                 }
                 break;
+            }
+            case SHL: {
+                if (IS16(op)) {
+                    word arg1 = *reg16bit[R1(op)];
+                    word res = (arg1 << 1);
+                    rfl.zero = res == 0;
+
+                    *reg16bit[R1(op)] = res;
+                } else {
+                    byte arg1 = *reg8bit[R1(op)];
+                    byte res = (arg1 << 1);
+                    rfl.zero = res == 0;
+
+                    *reg8bit[R1(op)] = res;
+                }
+                break;              
+            }
+            case SHR: {
+                if (IS16(op)) {
+                    word arg1 = *reg16bit[R1(op)];
+                    word res = (arg1 >> 1);
+                    rfl.zero = res == 0;
+
+                    *reg16bit[R1(op)] = res;
+                } else {
+                    byte arg1 = *reg8bit[R1(op)];
+                    byte res = (arg1 >> 1);
+                    rfl.zero = res == 0;
+
+                    *reg8bit[R1(op)] = res;
+                }
+                break;              
             }
             case JMP: { word addr = GETA1_16(op);  JMP(addr);};
             case JIZ: JMPI(rfl.zero)

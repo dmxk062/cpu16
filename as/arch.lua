@@ -35,8 +35,8 @@ M.instructions = {
     ["xor"]  = { type = "drow", code = 0x17 },
     ["shl"]  = { type = "sr", code = 0x18 },
     ["shr"]  = { type = "sr", code = 0x19 },
-    ["rol"]  = { type = "drow", code = 0x1A },
-    ["ror"]  = { type = "drow", code = 0x1B },
+    ["inc"]  = { type = "sr", code = 0x1A },
+    ["dec"]  = { type = "sr", code = 0x1B },
     ["cmp"]  = { type = "drow", code = 0x1F },
 
     -- branches
